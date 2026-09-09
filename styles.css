@@ -1,0 +1,167 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    min-height: 100vh;
+    padding: 20px;
+    color: #333;
+}
+
+.container {
+    max-width: 1400px;
+    margin: 0 auto;
+    background: white;
+    border-radius: 15px;
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+    overflow: hidden;
+}
+
+header {
+    background: linear-gradient(135deg, #11998e 0%, #38ef7d 100%);
+    padding: 40px 20px;
+    text-align: center;
+    color: white;
+}
+
+header h1 {
+    font-size: 2.5em;
+    margin-bottom: 10px;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+header p {
+    font-size: 1.1em;
+    opacity: 0.9;
+}
+
+.flowchart-container {
+    padding: 40px 20px;
+    background: #f8f9fa;
+    overflow-x: auto;
+    min-height: 850px;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+}
+
+svg {
+    max-width: 100%;
+    height: auto;
+}
+
+.flowchart-node {
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.flowchart-node rect {
+    stroke-width: 2;
+    transition: all 0.3s ease;
+}
+
+.flowchart-node:hover rect {
+    stroke-width: 4;
+    filter: brightness(1.1);
+}
+
+.flowchart-node text {
+    pointer-events: none;
+    font-size: 14px;
+    font-weight: 500;
+    text-anchor: middle;
+}
+
+.node-start rect {
+    fill: #38ef7d;
+    stroke: #11998e;
+}
+
+.node-process rect {
+    fill: #667eea;
+    stroke: #5568d3;
+}
+
+.node-solution rect {
+    fill: #f093fb;
+    stroke: #da5ce3;
+}
+
+.node-benefit rect {
+    fill: #ffa500;
+    stroke: #e69500;
+}
+
+.node-end rect {
+    fill: #ff6b6b;
+    stroke: #cc5555;
+}
+
+.flowchart-node text {
+    fill: white;
+    font-weight: bold;
+}
+
+line.arrow {
+    stroke: #667eea;
+    stroke-width: 2;
+    marker-end: url(#arrowhead);
+}
+
+.info-panel {
+    padding: 30px;
+    background: #f0f4ff;
+    border-top: 3px solid #667eea;
+    min-height: 200px;
+}
+
+.info-content {
+    font-size: 1em;
+    line-height: 1.6;
+    color: #333;
+}
+
+.info-content h3 {
+    color: #11998e;
+    margin-bottom: 15px;
+    font-size: 1.3em;
+}
+
+.info-content p {
+    margin: 8px 0;
+}
+
+.info-content ul {
+    margin-left: 20px;
+    margin-top: 10px;
+}
+
+.info-content li {
+    margin: 8px 0;
+}
+
+footer {
+    background: #333;
+    color: white;
+    text-align: center;
+    padding: 20px;
+    font-size: 0.9em;
+}
+
+@media (max-width: 768px) {
+    header h1 {
+        font-size: 1.8em;
+    }
+
+    .flowchart-container {
+        min-height: auto;
+    }
+
+    .info-panel {
+        padding: 20px;
+    }
+}
