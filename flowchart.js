@@ -2,6 +2,9 @@ class Flowchart {
     constructor(svgId) {
         this.svg = document.getElementById(svgId);
         this.data = flowchartData;
+        this.modalOverlay = document.getElementById('modalOverlay');
+        this.modalInfo = document.getElementById('modalInfo');
+        this.modalClose = document.querySelector('.modal-close');
         this.init();
     }
 
@@ -10,6 +13,7 @@ class Flowchart {
         this.drawConnections();
         this.drawNodes();
         this.attachEventListeners();
+        this.attachModalListeners();
     }
 
     drawArrows() {
@@ -101,13 +105,26 @@ class Flowchart {
         
         nodes.forEach(node => {
             node.addEventListener('click', (e) => {
-                nodes.forEach(n => n.style.opacity = '0.6');
+                e.stopPropagation();
+                
+                // Remover classe active de todos os nós
+                nodes.forEach(n => {
+                    n.classList.remove('active');
+                    n.style.opacity = '0.6';
+                });
+                
+                // Adicionar classe active ao nó clicado
+                node.classList.add('active');
                 node.style.opacity = '1';
                 
                 const nodeId = parseInt(node.getAttribute('data-id'));
                 const nodeData = this.data.nodes.find(n => n.id === nodeId);
                 
+                // Atualizar o painel de informações
                 this.showInfo(nodeData, infoPanel);
+                
+                // Abrir o modal/pop-up
+                this.openModal(nodeData);
             });
             
             node.addEventListener('mouseenter', () => {
@@ -126,6 +143,27 @@ class Flowchart {
         }
     }
 
+    attachModalListeners() {
+        // Fechar modal ao clicar no botão X
+        this.modalClose.addEventListener('click', () => {
+            this.closeModal();
+        });
+
+        // Fechar modal ao clicar fora do conteúdo
+        this.modalOverlay.addEventListener('click', (e) => {
+            if (e.target === this.modalOverlay) {
+                this.closeModal();
+            }
+        });
+
+        // Fechar modal ao pressionar ESC
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape' && this.modalOverlay.classList.contains('active')) {
+                this.closeModal();
+            }
+        });
+    }
+
     showInfo(nodeData, container) {
         let html = `<h3>${nodeData.info.title}</h3>`;
         html += `<p>${nodeData.info.description}</p>`;
@@ -139,6 +177,43 @@ class Flowchart {
         }
         
         container.innerHTML = html;
+    }
+
+    openModal(nodeData) {
+        let html = '';
+        
+        // Adicionar ícone/emoji baseado no tipo de nó
+        const icons = {
+            'start': '🚀',
+            'process': '⚙️',
+            'solution': '💡',
+            'benefit': '🎯',
+            'end': '🌱'
+        };
+        
+        html += `<div class="modal-header-icon">${icons[nodeData.type] || '📍'}</div>`;
+        html += `<h2>${nodeData.info.title}</h2>`;
+        html += `<p>${nodeData.info.description}</p>`;
+        
+        if (nodeData.info.details) {
+            html += '<ul>';
+            nodeData.info.details.forEach(detail => {
+                html += `<li>${detail}</li>`;
+            });
+            html += '</ul>';
+        }
+
+        // Adicionar informações adicionais baseadas no tipo
+        if (nodeData.info.additionalInfo) {
+            html += `<p><strong>Saiba mais:</strong> ${nodeData.info.additionalInfo}</p>`;
+        }
+        
+        this.modalInfo.innerHTML = html;
+        this.modalOverlay.classList.add('active');
+    }
+
+    closeModal() {
+        this.modalOverlay.classList.remove('active');
     }
 }
 
