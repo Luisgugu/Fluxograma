@@ -144,8 +144,17 @@ class Flowchart {
     }
 
     attachModalListeners() {
-        // Fechar modal ao clicar no botão X
-        this.modalClose.addEventListener('click', () => {
+        // Verificar se o botão de fechar existe
+        if (!this.modalClose) {
+            console.error('Modal close button not found');
+            return;
+        }
+
+        // Fechar modal ao clicar no botão X - com preventDefault
+        this.modalClose.addEventListener('click', (e) => {
+            e.preventDefault();
+            e.stopPropagation();
+            console.log('Close button clicked');
             this.closeModal();
         });
 
