@@ -205,27 +205,32 @@ footer {
 
 .modal-close {
     position: absolute;
-    top: 15px;
+    top: 20px;
     right: 20px;
     background: none;
     border: none;
-    font-size: 2em;
+    font-size: 28px;
+    line-height: 1;
     cursor: pointer;
     color: #666;
-    transition: color 0.2s ease;
-    width: 40px;
-    height: 40px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
+    transition: all 0.2s ease;
+    padding: 5px;
+    pointer-events: auto;
+    z-index: 1001;
 }
 
 .modal-close:hover {
     color: #ff6b6b;
+    transform: scale(1.2);
+}
+
+.modal-close:active {
+    transform: scale(0.95);
 }
 
 .modal-body {
     padding: 40px 30px;
+    padding-top: 50px;
 }
 
 .modal-body h2 {
@@ -291,9 +296,15 @@ footer {
 
     .modal-body {
         padding: 30px 20px;
+        padding-top: 50px;
     }
 
     .modal-body h2 {
         font-size: 1.5em;
+    }
+
+    .modal-close {
+        top: 15px;
+        right: 15px;
     }
 }
