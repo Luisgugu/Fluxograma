@@ -4,6 +4,7 @@ class Flowchart {
         this.data = flowchartData;
         this.modalOverlay = document.getElementById('modalOverlay');
         this.modalInfo = document.getElementById('modalInfo');
+        this.modalClose = document.querySelector('.modal-close');
         this.init();
     }
 
@@ -135,18 +136,27 @@ class Flowchart {
     }
 
     attachModalListeners() {
-        this.modalOverlay.addEventListener('click', (e) => {
-            if (e.target.classList.contains('modal-close')) {
-                e.preventDefault();
-                e.stopPropagation();
-                this.closeModal();
-            } else if (e.target === this.modalOverlay) {
-                this.closeModal();
-            }
+        if (!this.modalClose) {
+            console.error('Modal close button not found');
+            return;
+        }
+
+        this.modalClose.addEventListener('click', (e) => {
+            e.preventDefault();
+            e.stopPropagation();
+            this.closeModal();
         });
 
+        if (this.modalOverlay) {
+            this.modalOverlay.addEventListener('click', (e) => {
+                if (e.target === this.modalOverlay) {
+                    this.closeModal();
+                }
+            });
+        }
+
         document.addEventListener('keydown', (e) => {
-            if (e.key === 'Escape' && this.modalOverlay.classList.contains('active')) {
+            if (e.key === 'Escape' && this.modalOverlay && this.modalOverlay.classList.contains('active')) {
                 this.closeModal();
             }
         });
@@ -171,11 +181,11 @@ class Flowchart {
         let html = '';
 
         const icons = {
-            'start': '🚀',
-            'process': '⚙️',
-            'solution': '💡',
-            'benefit': '🎯',
-            'end': '🌱'
+            start: '🚀',
+            process: '⚙️',
+            solution: '💡',
+            benefit: '🎯',
+            end: '🌱'
         };
 
         html += `<div class="modal-header-icon">${icons[nodeData.type] || '📍'}</div>`;
@@ -199,7 +209,9 @@ class Flowchart {
     }
 
     closeModal() {
-        this.modalOverlay.classList.remove('active');
+        if (this.modalOverlay) {
+            this.modalOverlay.classList.remove('active');
+        }
     }
 }
 
