@@ -216,7 +216,7 @@ footer {
     transition: all 0.2s ease;
     padding: 5px;
     pointer-events: auto;
-    z-index: 1001;
+    z-index: 1002;
 }
 
 .modal-close:hover {
@@ -230,7 +230,7 @@ footer {
 
 .modal-body {
     padding: 40px 30px;
-    padding-top: 50px;
+    padding-top: 10px;
 }
 
 .modal-body h2 {
@@ -296,7 +296,7 @@ footer {
 
     .modal-body {
         padding: 30px 20px;
-        padding-top: 50px;
+        padding-top: 10px;
     }
 
     .modal-body h2 {
